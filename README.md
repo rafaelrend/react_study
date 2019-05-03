@@ -2,7 +2,7 @@
 # REDUX 
 90% esta na pasta src/store
 
-* [a relative link](src/store/reducers/BookReducer.js)
+* [src/store/reducers/BookReducer.js](src/store/reducers/BookReducer.js)
 ```javascript
 import { GRID_PAGE, GRID_ORDER } from '../action/actionTypes.js';
 
@@ -43,7 +43,7 @@ export const BookReducer = (state = initialState, action) => {
   }
 }; 
 ```
-* [a relative link](src/store/reducers/index.js)
+* [src/store/reducers/index.js](src/store/reducers/index.js)
 ```javascript
 import { BookReducer } from './BookReducer';
 // import { OtherReducer } from './otherReducer';
@@ -66,7 +66,7 @@ export const Store = createStore(Reducers);
 ```
 
 
-* [a relative link](src/views/App/book/book.jsx) 
+* [src/views/App/book/book.jsx](src/views/App/book/book.jsx) 
 ```javascript
  //imports
  import { GRID_PAGE, GRID_ORDER } from "../../../store/action/actionTypes.js"
@@ -159,7 +159,7 @@ export default  StoreShow;
 
 
 # INDEXEDDB
-* [a relative link](src/library/mydatabase.js) 
+* [src/library/mydatabase.js](src/library/mydatabase.js) 
 ```javascript
 //Definindo a estrutura dos dados que serão armazenados.
 import Dexie from 'dexie';
@@ -171,7 +171,7 @@ db.version(1).stores({
 
 export default db;
 ```
-* [a relative link](src/library/Api.js) 
+* [src/library/Api.js](src/library/Api.js) 
 ```javascript
    //Salvando um objeto (coloquei uma id para ter um identificador local, mas não é a id do usuário.
       storeUser( user ){
@@ -213,7 +213,7 @@ export default db;
 
 # AXIOS - MIDDLEWARE para renovar o Token.
 
-* [a relative link](src/library/AxiosService.js) 
+* [src/library/AxiosService.js](src/library/AxiosService.js) 
 ```javascript
 import axios from 'axios';
 import { Service } from 'axios-middleware';
@@ -301,7 +301,7 @@ service.register({
 });
 ```
 
-* [a relative link](src/index.js) 
+* [src/index.js](src/index.js) 
 ```javascript
      //Chama o middleware para configurar o axios.
      require('./library/AxiosService.js');
@@ -309,7 +309,7 @@ service.register({
 ```
 
 
-* [a relative link](src/views/App/login/login-teste.jsx) 
+* [src/views/App/login/login-teste.jsx](src/views/App/login/login-teste.jsx) 
 ```javascript
     (...)
      //Método de Login
@@ -345,7 +345,7 @@ service.register({
 
              Api.Call("api/users/","GET",{}).then(
                       (response) => {
-
+  
 
                                  if ( response != undefined && response.data != undefined ){
                                               this.setState( {retorno2: JSON.stringify(  response.data )  } );
