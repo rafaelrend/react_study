@@ -57,7 +57,7 @@ export const Reducers = combineReducers({
 });
 ```
 
-* [a relative link](src/store/index.js)
+* [src/store/index.js](src/store/index.js)
 ```javascript
 import { createStore } from 'redux';
 import { Reducers } from './reducers';
@@ -95,7 +95,7 @@ const mapDispatchToProps = dispatch =>
 
 export default connect(mapStateToProps, mapDispatchToProps)(Book);
 ```
-*  [a relative link](src/store/store_show.js)  Simples componente para mostrar quando a store tem seus valores modificados.
+*  [src/store/store_show.js](src/store/store_show.js)  Simples componente para mostrar quando a store tem seus valores modificados.
 ```javascript
 import React from 'react';
 import {Store} from './index.js'
