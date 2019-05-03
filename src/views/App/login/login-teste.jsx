@@ -31,8 +31,15 @@ class LoginTeste extends React.Component {
              Api.Call("api/users/","GET",{}).then(
                       (response) => {
 
+
+                                 if ( response != undefined && response.data != undefined ){
+                                              this.setState( {retorno2: JSON.stringify(  response.data )  } );
+
+                                 }else{
+                                               this.setState( {retorno2: "data vazio?"  } );
+
+                                 }
                                
-	                     		     	 this.setState( {retorno2: JSON.stringify(  response.data )  } );
                       }
              	);
   }

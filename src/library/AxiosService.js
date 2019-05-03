@@ -26,38 +26,77 @@ service.register({
          //rrend Testar se tenho authorization..
          //rrend Obter o token antigo..
          if ( error.response ) { 
-
-
-                                                           console.log(error.response.data);
-                                                         console.log(error.response.status);
-                                                         console.log(error.response.headers);
-
                            let originalRequest = error.config;
-                              if (  error.response.status == 401 &&  originalRequest.headers['Authorization'] != null && false ){
+
+                                                         console.log("axios error");
+                                                         //console.log(error.response.data);
+                                                         //console.log(error.response.status);
+                                                         //console.log(error.response.headers);
+                                                         console.log( originalRequest.url +" - " );
+                                                         var errorData = JSON.parse( error.response.data );
+
+                                                         console.log( errorData );
+                                                         console.log("Original reqquest: ");
+                                                         console.log( originalRequest );
+
+                              if (  error.response.status == 401 && errorData.code == "token_not_valid" 
+                                 &&  originalRequest.headers['Authorization'] != null  && originalRequest.url.indexOf("token/refresh") < 0 ){
+
+
+                                            /*
+                                                                                            {
+                                                    "detail": "Given token not valid for any token type",
+                                                    "code": "token_not_valid",
+                                                    "messages": [
+                                                        {
+                                                            "token_class": "AccessToken",
+                                                            "token_type": "access",
+                                                            "message": "Token is invalid or expired"
+                                                        }
+                                                    ]
+                                                } */
+
+                                                console.log("Tentando renovar o token..");
+
+                                     Api.getTokenUser("access_token").then ( 
+
+                                               (user) => {
+
                                 
-                                           let token_refresh = Api.getTokenUser("refresh_token"); //pegar a chave de refresh que veio do método TOKEN.
+                                                               let token_refresh = user.refresh_token; //pegar a chave de refresh que veio do método TOKEN.
 
-                                            return new Promise( (resolve, reject) => {
+                                                                return new Promise( (resolve, reject) => {
 
-                                                                Api.Call("token/refresh/", "POST", { refresh: token_refresh }).then((response) => {
+                                                                                    console.log("Vou passar pra ele o novo token: " + token_refresh );
 
-                                                                        if (response.status == 200) {
-                                                                                  //Armazenamos o novo Token novo.
-                                                                                  originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
-                                                                        }
+                                                                                    Api.Call("token/refresh/", "POST", { refresh: token_refresh }).then((response) => {
 
-                                                                      resolve(response);
+                                                                                            if (response.status == 200) {
+                                                                                                      console.log("Token Renovado!");
 
+                                                                                                      //Armazenamos o novo Token novo.
+                                                                                                      originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
+
+                                                                                                      user.token_acess = response.data.access;
+                                                                                                      console.log("Registrando o usuário no indexedDB");
+                                                                                                      Api.storeUser( user );
+                                                                                            }
+
+                                                                                          resolve(response);
+
+                                                                                    }).catch(e => {
+                                                                                          reject(error); //Vou retornar o erro 401 mesmo..
+                                                                                    })
+
+                                                                }).then( (response) => {
+                                                                           console.log("Returnando o axios? ");
+                                                                           return  axios(originalRequest) ;
                                                                 }).catch(e => {
-                                                                      reject(error); //Vou retornar o erro 401 mesmo..
-                                                                })
+                                                                           return error;
+                                                                           //app.router.push('/login');
+                                                                });
 
-                                            }).then( (response) => {
-                                                       return axios(originalRequest);
-                                            }).catch(e => {
-                                                       return error;
-                                                       //app.router.push('/login');
-                                            });
+                                                }).catch( (caterror) => { return error ;  } );//não achou token.
 
                                   }else{
 

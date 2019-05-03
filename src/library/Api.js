@@ -42,24 +42,8 @@ class ApiHttp {
 	          }
 	          getTokenUser(prop){
                        
- /*
-                       var collection = await db.user.where('id').equals(1);
-                       var token = {};
 
-                       collection.each(function(item) {
-
-                       	       console.log("found"); console.log( item );
-                       	       return item;
-                       	      // token = item[prop];
-						     //console.log('Found: ' + friend.name + ' with phone number ' + friend.phone);
-						});
-
-                       return token;
-
-                       */
-
-
-                      return new Promise ( function ( resolve  ) { 
+                      return new Promise ( function ( resolve, reject  ) { 
 
 
                                             var collection = db.user;
@@ -72,6 +56,14 @@ class ApiHttp {
 												     //console.log('Found: ' + friend.name + ' with phone number ' + friend.phone);
 												});
 
+                                              collection.count( function(count) {
+
+                                              	if ( count <= 0 ){
+                                              		reject({error: "empty user"} );
+                                              	}
+
+                                              } );
+
 
                                           //  resolve(  collection[0]  ) ;
 
@@ -79,38 +71,13 @@ class ApiHttp {
 
                        	);
 
-
-                /*
-                        
-
-							var users = await db.user.first().then((item) => {
-
-								   if ( item ){
-
-                                              return item[prop];
-
-								   }
-                                   else
-                                   {
-
-                                   	       return "";
-
-                                   }
-                                                     
-
-							});
-
-                          */
-
 	          }
 
 	          storeUser( user ){
 
-                user["id"] = 1;
-	          	console.log("vou tentar salvar..");
-	          	console.log(user);
-
-
+                      user["id"] = 1;
+	          	        //console.log("vou tentar salvar..");
+	                 	//console.log(user);
 	          	      db.user.put( user);
 	          }
 
@@ -126,9 +93,9 @@ class ApiHttp {
 
 				                 (user) => {
 
-				                 	console.log("Tentando mostrar promisse ");
+				                 	//console.log("Tentando mostrar promisse ");
 
-				                 	console.log(user);
+				                 	//console.log(user);
 
 
 											                        let url =  Constants.URL_API2 +  tipo; 
