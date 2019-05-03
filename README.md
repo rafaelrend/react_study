@@ -2,6 +2,17 @@
 # REDUX 
 90% esta na pasta src/store
 
+* [src/store/action/index.js](src/store/action/index.js)
+```javascript
+import { GRID_PAGE, GRID_ORDER } from '../action/actionTypes.js';
+
+export const clickStoreButton = (event, id_button , item) => ({
+           type: id_button,
+           item: item,
+           lastEvent: event,
+});
+```
+
 * [src/store/reducers/BookReducer.js](src/store/reducers/BookReducer.js)
 ```javascript
 import { GRID_PAGE, GRID_ORDER } from '../action/actionTypes.js';
